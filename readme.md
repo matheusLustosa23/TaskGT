@@ -37,6 +37,58 @@ The image below shows the logic model of the TaskGt project, illustrating the ta
 ![logic_model](./assets/images/logic_modeling.png)
 
 
+## 🗂️ Fisic Model
+
+``` bash
+###tb_user
+ CREATE TABLE tb_user (
+    user_id VARCHAR(36) PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(50),
+    password VARCHAR(50)
+);
+```
+
+```bash
+### tb_role
+CREATE TABLE tb_role (
+    role_id BIGINT PRIMARY KEY,
+    name VARCHAR(50)
+);
+```
+```bash
+### tb_role_user
+CREATE TABLE tb_role_user (
+    role_id BIGINT,
+    user_id VARCHAR(36)
+);
+ 
+ALTER TABLE tb_role_user ADD CONSTRAINT FK_tb_role_user_1
+    FOREIGN KEY (role_id)
+    REFERENCES tb_role (role_id);
+ 
+ALTER TABLE tb_role_user ADD CONSTRAINT FK_tb_role_user_2
+    FOREIGN KEY (user_id)
+    REFERENCES tb_user (user_id);
+```
+```bash
+###tb_task
+CREATE TABLE tb_task (
+    task_id BIGINT PRIMARY KEY,
+    title VARCHAR(50),
+    description VARCHAR(100),
+    status VARCHAR(36),
+    priorite VARCHAR(50),
+    deadline DATE,
+    user_id VARCHAR(36)
+);
+ 
+ALTER TABLE tb_task ADD CONSTRAINT FK_tb_task_2
+    FOREIGN KEY (user_id)
+    REFERENCES tb_user (user_id)
+    ON DELETE CASCADE;
+
+```
 
 
 
