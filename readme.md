@@ -30,6 +30,15 @@ The image below shows the conceptual model of the TaskGt project, illustrating t
 ![conceptual_model](./assets/images/conceptual_model.png)
 
 
+## 🗂️ Logic Model
+
+The image below shows the logic model of the TaskGt project, illustrating the tables and their attributes.
+
+![logic_model](./assets/images/logic_modeling.png)
+
+
+
+
 
 
 
