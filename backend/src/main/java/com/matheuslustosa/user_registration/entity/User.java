@@ -15,7 +15,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "tb_user_role",
             joinColumns =@JoinColumn(name = "user_id"),
@@ -23,6 +23,11 @@ public class User {
 
     )
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<Task> tasks;
+
+
 
     public User() {
     }
@@ -72,5 +77,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }
