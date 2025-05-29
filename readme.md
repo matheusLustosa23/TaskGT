@@ -91,7 +91,11 @@ ALTER TABLE tb_task ADD CONSTRAINT FK_tb_task_2
 ```
 
 
-
+<!-- ## 🔧 Configuração de perfis
+Este projeto utiliza perfis para diferentes ambientes:
+- `dev`: já vem configurado no repositório (H2).
+- `test`: usado para testes automatizados.
+- `prod`: você pode criar um `application-prod.properties` baseado no arquivo `application-prod.example.properties`. -->
 
 
 <!-- ## 🚀 Começando
@@ -117,5 +121,31 @@ usar o ``` bash comando```
 <!-- ## 📄 Licença -->
 
 <!-- ## Contributing -->
+
+
+<!-- 1. CMD (Prompt de Comando do Windows)
+cmd
+Copy
+Edit
+javac -d out src\main\java\com\jwt\jwtWIthDetails\Config\RSAGenerator.java
+java -cp out com.jwt.jwtWIthDetails.Config.RSAGenerator
+2. PowerShell (Windows)
+powershell
+Copy
+Edit
+javac -d out src\main\java\com\jwt\jwtWIthDetails\Config\RSAGenerator.java
+java -cp out com.jwt.jwtWIthDetails.Config.RSAGenerator
+Dica: Use barra invertida \ para caminhos, igual no CMD. Se der problema, tente colocar aspas no -cp:
+
+powershell
+Copy
+Edit
+java -cp "out" com.jwt.jwtWIthDetails.Config.RSAGenerator
+3. Linux (Terminal Bash)
+bash
+Copy
+Edit
+javac -d out src/main/java/com/jwt/jwtWIthDetails/Config/RSAGenerator.java
+java -cp out com.jwt.jwtWIthDetails.Config.RSAGenerator -->
 
 
