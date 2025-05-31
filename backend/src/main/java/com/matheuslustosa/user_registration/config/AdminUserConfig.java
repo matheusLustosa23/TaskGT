@@ -18,9 +18,9 @@ public class AdminUserConfig implements CommandLineRunner {
     @Value("${default.admin.password}")
     private String adminDefaultPassword;
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AdminUserConfig(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -83,7 +83,12 @@ public class AdminUserConfig implements CommandLineRunner {
                             roleRepository.findByName(Role.typeRole.ADMIN.name())
                                     .orElseThrow(()->
                                             new IllegalStateException("Não foi possivel atribuir a role admin ao user , role não encontrada"))
+
                     ));
+
+
+
+
                     userRepository.save(user);
                     System.out.println("User admin criado com sucesso!");
                 }
