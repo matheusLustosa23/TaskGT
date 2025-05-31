@@ -9,6 +9,7 @@ public class Role {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Long id;
+    @Column(unique = true)
     private String name;
 
     public Role() {
@@ -19,7 +20,7 @@ public class Role {
         this.name = name;
     }
 
-    enum typeRole{
+    public enum typeRole{
 
         ADMIN(1),
         USER(2);
