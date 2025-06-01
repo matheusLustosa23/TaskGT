@@ -2,6 +2,7 @@ package com.matheuslustosa.user_registration.config;
 
 import com.matheuslustosa.user_registration.entity.Role;
 import com.matheuslustosa.user_registration.entity.User;
+import com.matheuslustosa.user_registration.exceptions.RoleNotFound;
 import com.matheuslustosa.user_registration.repository.RoleRepository;
 import com.matheuslustosa.user_registration.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -82,7 +83,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     user.setRoles(Set.of(
                             roleRepository.findByName(Role.typeRole.ADMIN.name())
                                     .orElseThrow(()->
-                                            new IllegalStateException("Não foi possivel atribuir a role admin ao user , role não encontrada"))
+                                            new RoleNotFound("role not found"))
 
                     ));
 
