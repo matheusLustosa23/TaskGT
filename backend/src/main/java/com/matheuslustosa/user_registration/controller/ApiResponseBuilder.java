@@ -11,10 +11,10 @@ import java.util.List;
 
 public class ApiResponseBuilder {
 
-    public static <T>ApiResponseDTO<T>success(T data, String path,String message, PaginationResponseDTO pagination){
+    public static <T>ApiResponseDTO<T>success(T data, int status,String path,String message, PaginationResponseDTO pagination){
 
         SummaryDTO summary = new SummaryDTO(
-                HttpStatus.OK.value(),
+                status,
                 true,
                 message,
                 Instant.now(),
@@ -27,10 +27,10 @@ public class ApiResponseBuilder {
 
     }
 
-    public static <T>ApiResponseDTO<T>success(T data, String message,String path){
+    public static <T>ApiResponseDTO<T>success(T data, int status,String message,String path){
 
         SummaryDTO summary = new SummaryDTO(
-                HttpStatus.OK.value(),
+                status,
                 true,
                 message,
                 Instant.now(),
@@ -42,10 +42,10 @@ public class ApiResponseBuilder {
 
     }
 
-    public static <T>ApiResponseDTO<T>success(T data, String message){
+    public static <T>ApiResponseDTO<T>success(T data, int status,String message){
 
         SummaryDTO summary = new SummaryDTO(
-                HttpStatus.OK.value(),
+                status,
                 true,
                 message,
                 Instant.now(),

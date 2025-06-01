@@ -29,7 +29,7 @@ public class TokenController {
     public ResponseEntity<ApiResponseDTO<LoginResponseDTO>>login(@RequestBody LoginRequestDTO dto){
 
         var data = tokenService.login(dto);
-        ApiResponseDTO<LoginResponseDTO>response=ApiResponseBuilder.success(data,"Users fetched successfully","/login");
+        ApiResponseDTO<LoginResponseDTO>response=ApiResponseBuilder.success(data,HttpStatus.OK.value(), "Users fetched successfully","/login");
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
 
