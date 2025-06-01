@@ -5,6 +5,7 @@ import com.matheuslustosa.user_registration.entity.User;
 import com.matheuslustosa.user_registration.exceptions.RoleNotFound;
 import com.matheuslustosa.user_registration.repository.RoleRepository;
 import com.matheuslustosa.user_registration.repository.UserRepository;
+import com.matheuslustosa.user_registration.service.RoleService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +19,13 @@ public class AdminUserConfig implements CommandLineRunner {
 
     @Value("${default.admin.password}")
     private String adminDefaultPassword;
-
+    private final RoleService roleService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AdminUserConfig(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public AdminUserConfig(RoleService roleService, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.roleService = roleService;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -80,16 +82,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     user.setPassword(
                             passwordEncoder.encode(adminDefaultPassword)
                     );
-                    user.setRoles(Set.of(
-                            roleRepository.findByName(Role.typeRole.ADMIN.name())
-                                    .orElseThrow(()->
-                                            new RoleNotFound("role not found"))
-
-                    ));
-
-
-
-
+                    user.setRoles(Set.of(roleService.getOrThrow(Role.typeRole.ADMIN.name())));
                     userRepository.save(user);
                     System.out.println("User admin criado com sucesso!");
                 }
