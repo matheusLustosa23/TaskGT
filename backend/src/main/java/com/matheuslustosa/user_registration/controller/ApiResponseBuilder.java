@@ -58,6 +58,21 @@ public class ApiResponseBuilder {
 
     }
 
+    public static <T>ApiResponseDTO<T>error(String message,String errorCode,int status,String path){
+        SummaryDTO summary = new SummaryDTO(
+                status,
+                false,
+                message,
+                Instant.now(),
+                path,
+                errorCode
+        );
+
+        return  new ApiResponseDTO<>(summary,null,null);
+
+    }
+
+
 
 
 
