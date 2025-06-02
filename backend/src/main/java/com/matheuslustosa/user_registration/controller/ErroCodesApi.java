@@ -3,8 +3,11 @@ package com.matheuslustosa.user_registration.controller;
 public enum ErroCodesApi {
 
 
-    INVALID_CREDENTIALS("AUTH_001","user or password is invalid"),
-    INTERNAL_SERVER_ERROR("GEN_001","An unexpected error occurred. Contact support with error code GEN_001"),;
+    INVALID_CREDENTIALS("AUTH_001","Invalid username or password"),
+    ACCESS_DENIED("AUTH_002","Access denied"),
+    USER_NOT_FOUND_ERROR("USER_001","user not found"),
+    ROLE_NOT_FOUND_ERROR("ROLE_001","role not found"),
+    INTERNAL_SERVER_ERROR("GEN_001","An unexpected error occurred. Contact support with error code GEN_001");
 
 
     private final String code;
