@@ -6,10 +6,10 @@ import com.matheuslustosa.user_registration.dto.CreateUserResponseDTO;
 import com.matheuslustosa.user_registration.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -33,6 +33,23 @@ public class UserController {
        );
 
        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    ResponseEntity<ApiResponseDTO<Void>>deleteUser(@PathVariable UUID id){
+        userService.deleteUser(id);
+        ApiResponseDTO<Void>response = ApiResponseBuilder.success(
+                null,
+                HttpStatus.OK.value(),
+                "User deleted successfully",
+                "/user"
+
+        );
+
+        return ResponseEntity.ok(response);
 
 
     }
