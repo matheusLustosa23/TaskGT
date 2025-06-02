@@ -5,7 +5,7 @@ import com.matheuslustosa.user_registration.dto.LoginRequestDTO;
 import com.matheuslustosa.user_registration.entity.Role;
 
 import com.matheuslustosa.user_registration.entity.User;
-import com.matheuslustosa.user_registration.exceptions.InvalidCredentials;
+import com.matheuslustosa.user_registration.exceptions.InvalidCredentialsException;
 import com.matheuslustosa.user_registration.repository.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,12 +40,12 @@ public class TokenService {
         long expiresIn = 3600L;
 
         User user = userRepository.findByUsername(dto.username()).orElseThrow(
-                ()-> new InvalidCredentials("user or password is invalid")
+                ()-> new InvalidCredentialsException("user or password is invalid")
         );
 
         boolean isLoginCorrect=passwordEncoder.matches(dto.password(),user.getPassword());
         if(!isLoginCorrect){
-            throw new InvalidCredentials("user or password is invalid");
+            throw new InvalidCredentialsException("user or password is invalid");
         }
 
 

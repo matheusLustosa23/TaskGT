@@ -1,7 +1,7 @@
 package com.matheuslustosa.user_registration.service;
 
 import com.matheuslustosa.user_registration.entity.Role;
-import com.matheuslustosa.user_registration.exceptions.RoleNotFound;
+import com.matheuslustosa.user_registration.exceptions.RoleNotFoundException;
 import com.matheuslustosa.user_registration.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,8 @@ public class RoleService {
 
     public Role getOrThrow(String roleName){
         return roleRepository.findByName(roleName).orElseThrow(
-                () -> new RoleNotFound("Role '%s' not found".formatted(roleName)));
+                () -> new RoleNotFoundException("Role '%s' not found".formatted(roleName)));
+
 
 
     }

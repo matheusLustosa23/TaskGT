@@ -2,12 +2,12 @@ package com.matheuslustosa.user_registration.exceptions;
 
 import java.io.Serial;
 
-public class RoleNotFound extends RuntimeException{
+public class RoleNotFoundException extends RuntimeException{
 
     @Serial
     private static final long serialVersionUID = 1l;
 
-    public RoleNotFound(String message){
+    public RoleNotFoundException(String message){
         super(message);
     }
 }

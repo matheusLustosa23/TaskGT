@@ -4,15 +4,14 @@ import com.matheuslustosa.user_registration.dto.CreateUserRequestDTO;
 import com.matheuslustosa.user_registration.dto.CreateUserResponseDTO;
 import com.matheuslustosa.user_registration.entity.Role;
 import com.matheuslustosa.user_registration.entity.User;
-import com.matheuslustosa.user_registration.exceptions.ResourceAlreadyExists;
-import com.matheuslustosa.user_registration.exceptions.RoleNotFound;
-import com.matheuslustosa.user_registration.repository.RoleRepository;
+import com.matheuslustosa.user_registration.exceptions.ResourceAlreadyExistsException;
+import com.matheuslustosa.user_registration.exceptions.UserNotFoundException;
 import com.matheuslustosa.user_registration.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -31,7 +30,7 @@ public class UserService {
 
 
         if(userRepository.findByEmail(dto.email()).isPresent()){
-            throw new ResourceAlreadyExists("Email already in use");
+            throw new ResourceAlreadyExistsException("Email already in use");
         }
 
 
@@ -46,5 +45,14 @@ public class UserService {
 
 
         return new CreateUserResponseDTO(dto.username(), dto.email());
+    }
+
+    public void deleteUser(UUID id){
+       User user = userRepository.findById(id).orElseThrow(
+               () -> new UserNotFoundException("User not found")
+       );
+
+        userRepository.delete(user);
+
     }
 }
