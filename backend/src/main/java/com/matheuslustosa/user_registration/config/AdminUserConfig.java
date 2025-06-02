@@ -2,7 +2,6 @@ package com.matheuslustosa.user_registration.config;
 
 import com.matheuslustosa.user_registration.entity.Role;
 import com.matheuslustosa.user_registration.entity.User;
-import com.matheuslustosa.user_registration.exceptions.RoleNotFound;
 import com.matheuslustosa.user_registration.repository.RoleRepository;
 import com.matheuslustosa.user_registration.repository.UserRepository;
 import com.matheuslustosa.user_registration.service.RoleService;
