@@ -25,7 +25,7 @@ public class Role {
         ADMIN(1),
         USER(2);
 
-        private long roleID;
+        private final long roleID;
 
         typeRole(long id) {
             this.roleID = id;
