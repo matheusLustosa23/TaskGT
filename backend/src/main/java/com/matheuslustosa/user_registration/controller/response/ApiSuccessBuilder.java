@@ -1,17 +1,13 @@
-package com.matheuslustosa.user_registration.controller;
+package com.matheuslustosa.user_registration.controller.response;
 
-import com.matheuslustosa.user_registration.dto.ApiResponseDTO;
-import com.matheuslustosa.user_registration.dto.PaginationResponseDTO;
-import com.matheuslustosa.user_registration.dto.SummaryDTO;
-import org.aspectj.bridge.Message;
-import org.springframework.http.HttpStatus;
+import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
+import com.matheuslustosa.user_registration.dto.shared.PaginationDTO;
+import com.matheuslustosa.user_registration.dto.shared.SummaryDTO;
 
 import java.time.Instant;
-import java.util.List;
 
-public class ApiResponseBuilder {
-
-    public static <T>ApiResponseDTO<T>success(T data, int status,String path,String message, PaginationResponseDTO pagination){
+public class ApiSuccessBuilder {
+    public static <T> ApiResponseDTO<T> success(T data, int status, String path, String message, PaginationDTO pagination){
 
         SummaryDTO summary = new SummaryDTO(
                 status,
@@ -57,24 +53,4 @@ public class ApiResponseBuilder {
         return  new ApiResponseDTO<>(summary,data,null);
 
     }
-
-    public static <T>ApiResponseDTO<T>error(String message,String errorCode,int status,String path){
-        SummaryDTO summary = new SummaryDTO(
-                status,
-                false,
-                message,
-                Instant.now(),
-                path,
-                errorCode
-        );
-
-        return  new ApiResponseDTO<>(summary,null,null);
-
-    }
-
-
-
-
-
-
 }

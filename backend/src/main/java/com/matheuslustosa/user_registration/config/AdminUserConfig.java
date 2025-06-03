@@ -2,6 +2,7 @@ package com.matheuslustosa.user_registration.config;
 
 import com.matheuslustosa.user_registration.entity.Role;
 import com.matheuslustosa.user_registration.entity.User;
+import com.matheuslustosa.user_registration.enums.RoleType;
 import com.matheuslustosa.user_registration.repository.RoleRepository;
 import com.matheuslustosa.user_registration.repository.UserRepository;
 import com.matheuslustosa.user_registration.service.RoleService;
@@ -36,7 +37,7 @@ public class AdminUserConfig implements CommandLineRunner {
 
 
 
-        var roleAdmin = roleRepository.findByName(Role.typeRole.ADMIN.name());
+        var roleAdmin = roleRepository.findByName(RoleType.ADMIN.name());
 
 
         roleAdmin.ifPresentOrElse(
@@ -46,13 +47,13 @@ public class AdminUserConfig implements CommandLineRunner {
                 ()->{
                     System.out.println("Criando Role admin");
                     Role role = new Role();
-                    role.setName(Role.typeRole.ADMIN.name());
+                    role.setName(RoleType.ADMIN.name());
                     roleRepository.save(role);
                     System.out.println("Role admin criada com sucesso!");
                 }
         );
 
-        var roleUser = roleRepository.findByName(Role.typeRole.USER.name());
+        var roleUser = roleRepository.findByName(RoleType.USER.name());
 
         roleUser.ifPresentOrElse(
                 role -> {
@@ -61,7 +62,7 @@ public class AdminUserConfig implements CommandLineRunner {
                 () -> {
                     System.out.println("Criando Role user");
                     Role role = new Role();
-                    role.setName(Role.typeRole.USER.name());
+                    role.setName(RoleType.USER.name());
                     roleRepository.save(role);
                     System.out.println("Role user criada com sucesso!");
                 }
@@ -81,7 +82,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     user.setPassword(
                             passwordEncoder.encode(adminDefaultPassword)
                     );
-                    user.setRoles(Set.of(roleService.getOrThrow(Role.typeRole.ADMIN.name())));
+                    user.setRoles(Set.of(roleService.getOrThrow(RoleType.ADMIN.name())));
                     userRepository.save(user);
                     System.out.println("User admin criado com sucesso!");
                 }

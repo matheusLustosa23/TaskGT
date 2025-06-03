@@ -1,7 +1,7 @@
 package com.matheuslustosa.user_registration.service;
 
-import com.matheuslustosa.user_registration.dto.LoginResponseDTO;
-import com.matheuslustosa.user_registration.dto.LoginRequestDTO;
+import com.matheuslustosa.user_registration.dto.response.LoginResponseDTO;
+import com.matheuslustosa.user_registration.dto.request.LoginRequestDTO;
 import com.matheuslustosa.user_registration.entity.Role;
 
 import com.matheuslustosa.user_registration.entity.User;
@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Service
-public class TokenService {
+public class JwtService {
 
     private final JwtEncoder jwtEncoder;
     private final  UserRepository userRepository;
@@ -26,7 +26,7 @@ public class TokenService {
 
     
 
-    public TokenService( JwtEncoder jwtEncoder, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public JwtService(JwtEncoder jwtEncoder, UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         this.jwtEncoder = jwtEncoder;
         this.userRepository = userRepository;

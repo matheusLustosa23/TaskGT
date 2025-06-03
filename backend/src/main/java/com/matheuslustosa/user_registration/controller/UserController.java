@@ -1,8 +1,9 @@
 package com.matheuslustosa.user_registration.controller;
 
-import com.matheuslustosa.user_registration.dto.ApiResponseDTO;
-import com.matheuslustosa.user_registration.dto.CreateUserRequestDTO;
-import com.matheuslustosa.user_registration.dto.CreateUserResponseDTO;
+import com.matheuslustosa.user_registration.controller.response.ApiSuccessBuilder;
+import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
+import com.matheuslustosa.user_registration.dto.request.UserCreateRequestDTO;
+import com.matheuslustosa.user_registration.dto.response.UserCreateResponseDTO;
 import com.matheuslustosa.user_registration.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseDTO<CreateUserResponseDTO>>createUser(@RequestBody CreateUserRequestDTO dto){
-       CreateUserResponseDTO data =  userService.registerUser(dto);
-       ApiResponseDTO<CreateUserResponseDTO>response = ApiResponseBuilder.success(
+    public ResponseEntity<ApiResponseDTO<UserCreateResponseDTO>>createUser(@RequestBody UserCreateRequestDTO dto){
+       UserCreateResponseDTO data =  userService.registerUser(dto);
+       ApiResponseDTO<UserCreateResponseDTO>response = ApiSuccessBuilder.success(
                data,
                HttpStatus.CREATED.value(),
                "User registered successfully",
@@ -41,7 +42,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     ResponseEntity<ApiResponseDTO<Void>>deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
-        ApiResponseDTO<Void>response = ApiResponseBuilder.success(
+        ApiResponseDTO<Void>response = ApiSuccessBuilder.success(
                 null,
                 HttpStatus.OK.value(),
                 "User deleted successfully",

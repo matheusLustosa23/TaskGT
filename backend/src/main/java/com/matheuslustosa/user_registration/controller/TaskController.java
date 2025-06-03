@@ -1,10 +1,9 @@
 package com.matheuslustosa.user_registration.controller;
 
-import com.matheuslustosa.user_registration.dto.ApiResponseDTO;
-import com.matheuslustosa.user_registration.dto.CreateTaskRequestDTO;
-import com.matheuslustosa.user_registration.dto.CreateTaskResponseDTO;
-import com.matheuslustosa.user_registration.dto.CreateUserResponseDTO;
-import com.matheuslustosa.user_registration.entity.Task;
+import com.matheuslustosa.user_registration.controller.response.ApiSuccessBuilder;
+import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
+import com.matheuslustosa.user_registration.dto.request.TaskCreateRequestDTO;
+import com.matheuslustosa.user_registration.dto.response.TaskCreateResponseDTO;
 import com.matheuslustosa.user_registration.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +20,10 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<ApiResponseDTO<CreateTaskResponseDTO>>registerTask(@RequestBody CreateTaskRequestDTO dto){
-        CreateTaskResponseDTO data=taskService.saveTask(dto);
+    public ResponseEntity<ApiResponseDTO<TaskCreateResponseDTO>>registerTask(@RequestBody TaskCreateRequestDTO dto){
+        TaskCreateResponseDTO data=taskService.saveTask(dto);
 
-        ApiResponseDTO<CreateTaskResponseDTO>response=ApiResponseBuilder.success(
+        ApiResponseDTO<TaskCreateResponseDTO>response= ApiSuccessBuilder.success(
                 data,
                 HttpStatus.CREATED.value(),
                 "Task registered successfully",

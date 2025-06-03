@@ -1,4 +1,4 @@
-package com.matheuslustosa.user_registration.dto;
+package com.matheuslustosa.user_registration.dto.shared;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,9 +1,9 @@
 package com.matheuslustosa.user_registration.service;
 
-import com.matheuslustosa.user_registration.dto.CreateUserRequestDTO;
-import com.matheuslustosa.user_registration.dto.CreateUserResponseDTO;
-import com.matheuslustosa.user_registration.entity.Role;
+import com.matheuslustosa.user_registration.dto.request.UserCreateRequestDTO;
+import com.matheuslustosa.user_registration.dto.response.UserCreateResponseDTO;
 import com.matheuslustosa.user_registration.entity.User;
+import com.matheuslustosa.user_registration.enums.RoleType;
 import com.matheuslustosa.user_registration.exceptions.ResourceAlreadyExistsException;
 import com.matheuslustosa.user_registration.exceptions.UserNotFoundException;
 import com.matheuslustosa.user_registration.repository.UserRepository;
@@ -26,7 +26,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public CreateUserResponseDTO registerUser(CreateUserRequestDTO dto){
+    public UserCreateResponseDTO registerUser(UserCreateRequestDTO dto){
 
 
         if(userRepository.findByEmail(dto.email()).isPresent()){
@@ -38,13 +38,13 @@ public class UserService {
         user.setUsername(dto.username());
         user.setEmail(dto.email());
         user.setPassword(passwordEncoder.encode(dto.password()));
-        user.setRoles(Set.of(roleService.getOrThrow(Role.typeRole.USER.name())));
+        user.setRoles(Set.of(roleService.getOrThrow(RoleType.USER.name())));
         userRepository.save(user);
 
 
 
 
-        return new CreateUserResponseDTO(dto.username(), dto.email());
+        return new UserCreateResponseDTO(dto.username(), dto.email());
     }
 
     public void deleteUser(UUID id){

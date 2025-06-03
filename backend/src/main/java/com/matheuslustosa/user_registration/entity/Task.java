@@ -1,5 +1,7 @@
 package com.matheuslustosa.user_registration.entity;
 
+import com.matheuslustosa.user_registration.enums.TaskPriority;
+import com.matheuslustosa.user_registration.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -17,9 +19,9 @@ public class Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private StatusTask status;
+    private TaskStatus status;
     @Enumerated(EnumType.STRING)
-    private PriorityTask priority;
+    private TaskPriority priority;
 
     private LocalDate dateLine;
 
@@ -27,7 +29,7 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Task(Long id, String title, String description, StatusTask status, PriorityTask priority, LocalDate dateLine, User user) {
+    public Task(Long id, String title, String description, TaskStatus status, TaskPriority priority, LocalDate dateLine, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -64,11 +66,11 @@ public class Task {
         this.description = description;
     }
 
-    public StatusTask getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(StatusTask status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
@@ -88,52 +90,16 @@ public class Task {
         this.user = user;
     }
 
-    public PriorityTask getPriority() {
+    public TaskPriority getPriority() {
         return priority;
     }
 
-    public void setPriority(PriorityTask priority) {
+    public void setPriority(TaskPriority priority) {
         this.priority = priority;
     }
 
 
 
-    public  enum StatusTask{
-        TO_DO("To Do"),
-        IN_PROGRESS("In Progress"),
-        PAUSED("Paused"),
-        COMPLETED("Completed"),
-        CANCELED("Canceled"),
-        OVERDUE("Overdue");
 
-        private final String label;
-
-        StatusTask(String label){
-            this.label = label;
-        }
-
-
-        public String getLabel() {
-            return label;
-        }
-    }
-
-    public enum PriorityTask{
-
-        LOW("Low"),
-        MEDIUM("Medium"),
-        HIGH("High"),
-        CRITICAL("Critical");
-
-
-
-        private final String label;
-        PriorityTask(String label){
-            this.label = label;
-        }
-        public String getLabel() {
-            return label;
-        }
-    }
 
 }

@@ -20,22 +20,7 @@ public class Role {
         this.name = name;
     }
 
-    public enum typeRole{
 
-        ADMIN(1),
-        USER(2);
-
-        private final long roleID;
-
-        typeRole(long id) {
-            this.roleID = id;
-        }
-
-        public long getRoleID() {
-            return this.roleID;
-        }
-
-    }
 
 
 

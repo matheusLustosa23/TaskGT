@@ -1,9 +1,10 @@
 package com.matheuslustosa.user_registration.exceptions;
 
 
-import com.matheuslustosa.user_registration.controller.ApiResponseBuilder;
-import com.matheuslustosa.user_registration.controller.ErroCodesApi;
-import com.matheuslustosa.user_registration.dto.ApiResponseDTO;
+
+import com.matheuslustosa.user_registration.controller.handler.ErroCodesApi;
+import com.matheuslustosa.user_registration.controller.response.ApiErrorBuilder;
+import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiResponseDTO<?>>userNotFoundException(UserNotFoundException ex, HttpServletRequest request){
         log.info("User not found: {} " , ex.getMessage());
-        ApiResponseDTO<?>response=ApiResponseBuilder.error(
+        ApiResponseDTO<?>response= ApiErrorBuilder.error(
                 ErroCodesApi.USER_NOT_FOUND_ERROR.getMessage(),
                 ErroCodesApi.USER_NOT_FOUND_ERROR.getCode(),
                 HttpStatus.NOT_FOUND.value(),
@@ -34,7 +35,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RoleNotFoundException.class)
     public ResponseEntity<ApiResponseDTO<?>>roleNotFoundException(RoleNotFoundException ex, HttpServletRequest request){
         log.info("Role not found: {} " , ex.getMessage());
-        ApiResponseDTO<?>response=ApiResponseBuilder.error(
+        ApiResponseDTO<?>response=ApiErrorBuilder.error(
                 ErroCodesApi.ROLE_NOT_FOUND_ERROR.getMessage(),
                 ErroCodesApi.ROLE_NOT_FOUND_ERROR.getCode(),
                 HttpStatus.NOT_FOUND.value(),
@@ -52,7 +53,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ApiResponseDTO<?>>invalidCredentialsException(InvalidCredentialsException ex, HttpServletRequest request){
         log.warn("Invalid credentials received: {}", ex.getMessage());
-        ApiResponseDTO<?> response = ApiResponseBuilder.error(
+        ApiResponseDTO<?> response = ApiErrorBuilder.error(
                 ErroCodesApi.INVALID_CREDENTIALS.getMessage(),
                 ErroCodesApi.INVALID_CREDENTIALS.getCode(),
                 HttpStatus.UNAUTHORIZED.value(),
@@ -68,7 +69,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseDTO<?>> handleGenericException(Exception ex , HttpServletRequest request){
         log.error("Unexpected error occurred", ex);
-        ApiResponseDTO<?> response = ApiResponseBuilder.error(
+        ApiResponseDTO<?> response = ApiErrorBuilder.error(
                 ErroCodesApi.INTERNAL_SERVER_ERROR.getMessage(),
                 ErroCodesApi.INTERNAL_SERVER_ERROR.getCode(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -81,7 +82,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponseDTO<?>>AuthorizationDeniedException(AccessDeniedException ex, HttpServletRequest request){
         log.warn("Authorization denied: {}", ex.getMessage());
-        ApiResponseDTO<?> response = ApiResponseBuilder.error(
+        ApiResponseDTO<?> response = ApiErrorBuilder.error(
                 ErroCodesApi.ACCESS_DENIED.getMessage(),
                 ErroCodesApi.ACCESS_DENIED.getCode(),
                 HttpStatus.FORBIDDEN.value(),

@@ -1,4 +1,4 @@
-package com.matheuslustosa.user_registration.controller;
+package com.matheuslustosa.user_registration.controller.handler;
 
 public enum ErroCodesApi {
 
