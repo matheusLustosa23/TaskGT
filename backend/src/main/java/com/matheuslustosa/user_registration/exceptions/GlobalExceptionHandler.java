@@ -17,6 +17,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(TokenInvalidException.class)
+    public ResponseEntity<ApiResponseDTO<?>>tokenInvalidException(TokenInvalidException ex,HttpServletRequest request){
+        log.warn("Token is invalid: {}",ex.getMessage());
+        ApiResponseDTO<?>response= ApiErrorBuilder.error(
+                ErroCodesApi.TOKEN_INVALID.getMessage(),
+                ErroCodesApi.TOKEN_INVALID.getCode(),
+                HttpStatus.UNAUTHORIZED.value(),
+                request.getRequestURI()
+
+        );
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiResponseDTO<?>>userNotFoundException(UserNotFoundException ex, HttpServletRequest request){
         log.info("User not found: {} " , ex.getMessage());

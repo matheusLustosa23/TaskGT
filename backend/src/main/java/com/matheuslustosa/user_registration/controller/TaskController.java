@@ -34,6 +34,21 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<Void>>deleteTaskById(@PathVariable Long id){
+        taskService.deleteTaskById(id);
+        ApiResponseDTO<Void>response = ApiSuccessBuilder.success(
+                null,
+                HttpStatus.OK.value(),
+                 "Task deleted successfully",
+                "/task/"+id
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
+
 
 
 
