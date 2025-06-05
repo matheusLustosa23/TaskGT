@@ -23,19 +23,19 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
 
-    private LocalDate dateLine;
+    private LocalDate deadLine;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Task(Long id, String title, String description, TaskStatus status, TaskPriority priority, LocalDate dateLine, User user) {
+    public Task(Long id, String title, String description, TaskStatus status, TaskPriority priority, LocalDate deadLine, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.priority = priority;
-        this.dateLine = dateLine;
+        this.deadLine = deadLine;
         this.user = user;
     }
 
@@ -74,12 +74,12 @@ public class Task {
         this.status = status;
     }
 
-    public LocalDate getDateLine() {
-        return dateLine;
+    public LocalDate getDeadLine() {
+        return deadLine;
     }
 
-    public void setDateLine(LocalDate dateLine) {
-        this.dateLine = dateLine;
+    public void setDeadLine(LocalDate deadLine) {
+        this.deadLine = deadLine;
     }
 
     public User getUser() {

@@ -3,6 +3,7 @@ package com.matheuslustosa.user_registration.service;
 import com.matheuslustosa.user_registration.controller.handler.ErroCodesApi;
 import com.matheuslustosa.user_registration.dto.request.TaskCreateRequestDTO;
 import com.matheuslustosa.user_registration.dto.response.TaskCreateResponseDTO;
+import com.matheuslustosa.user_registration.dto.response.TaskDTO;
 import com.matheuslustosa.user_registration.entity.Task;
 import com.matheuslustosa.user_registration.entity.User;
 import com.matheuslustosa.user_registration.enums.RoleType;
@@ -14,6 +15,7 @@ import com.matheuslustosa.user_registration.repository.TaskRepository;
 import com.matheuslustosa.user_registration.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -44,11 +46,11 @@ public class TaskService {
         task.setDescription(dto.description());
         task.setStatus(TaskStatus.TO_DO);
         task.setPriority(dto.priority());
-        task.setDateLine(dto.deadline());
+        task.setDeadLine(dto.deadLine());
 
         taskRepository.save(task);
 
-        return new TaskCreateResponseDTO(task.getTitle(),task.getStatus(),task.getDateLine())
+        return new TaskCreateResponseDTO(task.getTitle(),task.getStatus(),task.getDeadLine())
 ;
 
 
@@ -77,6 +79,42 @@ public class TaskService {
         taskRepository.delete(task);
 
     }
+
+    public TaskDTO getTaskById(Long id){
+        UUID authUserId = jwtService.getUserId();
+
+        Task task = taskRepository.findById(id).orElseThrow(
+                () -> new TaskNotFoundException("Task not found")
+        );
+
+        return new TaskDTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getPriority(),
+                task.getDeadLine()
+        );
+
+
+
+
+    }
+
+    public List<TaskDTO> getAllTasksByUSer(){
+        UUID authUserId = jwtService.getUserId();
+
+        User userAuth = userRepository.findById(authUserId).orElseThrow(
+                () -> new UserNotFoundException("User not found")
+        );
+
+
+        return  taskRepository.findByUser(userAuth).stream().map(TaskDTO::new).toList();
+
+
+    }
+
+
 
 
 }

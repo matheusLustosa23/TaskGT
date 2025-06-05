@@ -1,6 +1,7 @@
 package com.matheuslustosa.user_registration.controller;
 
 import com.matheuslustosa.user_registration.controller.response.ApiSuccessBuilder;
+import com.matheuslustosa.user_registration.dto.response.TaskDTO;
 import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
 import com.matheuslustosa.user_registration.dto.request.TaskCreateRequestDTO;
 import com.matheuslustosa.user_registration.dto.response.TaskCreateResponseDTO;
@@ -8,6 +9,8 @@ import com.matheuslustosa.user_registration.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/task")
@@ -42,6 +45,33 @@ public class TaskController {
                 HttpStatus.OK.value(),
                  "Task deleted successfully",
                 "/task/"+id
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponseDTO<List<TaskDTO>>>getAllTaskByUser(){
+        List<TaskDTO>data = taskService.getAllTasksByUSer();
+        ApiResponseDTO<List<TaskDTO>>response= ApiSuccessBuilder.success(
+                data,
+                HttpStatus.OK.value(),
+                "Request successfully",
+                "/task"
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<TaskDTO>>getTaskById(@PathVariable Long  id){
+        TaskDTO data=taskService.getTaskById(id);
+        ApiResponseDTO<TaskDTO>response = ApiSuccessBuilder.success(
+                data,
+                HttpStatus.OK.value(),
+                "Operation successfully",
+                "/task/"+id
+
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

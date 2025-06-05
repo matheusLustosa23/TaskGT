@@ -7,7 +7,7 @@ import com.matheuslustosa.user_registration.dto.shared.SummaryDTO;
 import java.time.Instant;
 
 public class ApiSuccessBuilder {
-    public static <T> ApiResponseDTO<T> success(T data, int status, String path, String message, PaginationDTO pagination){
+    public static <T> ApiResponseDTO<T> success(T data, int status,String message,String path, PaginationDTO pagination){
 
         SummaryDTO summary = new SummaryDTO(
                 status,
