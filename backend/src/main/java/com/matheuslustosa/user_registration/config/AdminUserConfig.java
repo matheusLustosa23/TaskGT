@@ -9,12 +9,16 @@ import com.matheuslustosa.user_registration.service.RoleService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
 @Configuration
+@Profile({"dev","test"})
+@Order(1)
 public class AdminUserConfig implements CommandLineRunner {
 
     @Value("${default.admin.password}")
