@@ -43,7 +43,7 @@ public class UserController {
     ResponseEntity<ApiResponseDTO<Void>>deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
         ApiResponseDTO<Void>response = ApiSuccessBuilder.success(
-                null,
+
                 HttpStatus.OK.value(),
                 "User deleted successfully",
                 "/user"

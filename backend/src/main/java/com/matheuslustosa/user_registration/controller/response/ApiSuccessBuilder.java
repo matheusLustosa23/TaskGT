@@ -2,13 +2,18 @@ package com.matheuslustosa.user_registration.controller.response;
 
 import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
 import com.matheuslustosa.user_registration.dto.shared.PaginationDTO;
+import com.matheuslustosa.user_registration.dto.shared.PaginationReponseDTO;
 import com.matheuslustosa.user_registration.dto.shared.SummaryDTO;
+import org.springframework.data.domain.Page;
 
 import java.time.Instant;
 
 public class ApiSuccessBuilder {
-    public static <T> ApiResponseDTO<T> success(T data, int status,String message,String path, PaginationDTO pagination){
-
+    public static <T> ApiResponseDTO<PaginationReponseDTO<T>> success( Page<T> pagination,int status, String message, String path){
+        PaginationReponseDTO<T>paginationReponseDTO = new PaginationReponseDTO<>(
+                pagination.getContent(),
+                new PaginationDTO(pagination)
+        );
         SummaryDTO summary = new SummaryDTO(
                 status,
                 true,
@@ -19,7 +24,7 @@ public class ApiSuccessBuilder {
         );
 
 
-        return  new ApiResponseDTO<>(summary,data,pagination);
+        return  new ApiResponseDTO<>(summary,paginationReponseDTO);
 
     }
 
@@ -34,11 +39,11 @@ public class ApiSuccessBuilder {
         );
 
 
-        return  new ApiResponseDTO<>(summary,data,null);
+        return  new ApiResponseDTO<>(summary,data);
 
     }
 
-    public static <T>ApiResponseDTO<T>success(T data, int status,String message){
+    public static <T>ApiResponseDTO<T>success(int status,String message,String path){
 
         SummaryDTO summary = new SummaryDTO(
                 status,
@@ -50,7 +55,7 @@ public class ApiSuccessBuilder {
         );
 
 
-        return  new ApiResponseDTO<>(summary,data,null);
+        return  new ApiResponseDTO<>(summary,null);
 
     }
 }

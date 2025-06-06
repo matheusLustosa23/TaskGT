@@ -16,7 +16,7 @@ public class ApiErrorBuilder {
                 errorCode
         );
 
-        return  new ApiResponseDTO<>(summary,null,null);
+        return  new ApiResponseDTO<>(summary,null);
 
     }
 

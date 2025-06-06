@@ -13,10 +13,13 @@ import com.matheuslustosa.user_registration.exceptions.TaskNotFoundException;
 import com.matheuslustosa.user_registration.exceptions.UserNotFoundException;
 import com.matheuslustosa.user_registration.repository.TaskRepository;
 import com.matheuslustosa.user_registration.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+
 import java.util.UUID;
 
 @Service
@@ -101,15 +104,15 @@ public class TaskService {
 
     }
 
-    public List<TaskDTO> getAllTasksByUSer(){
+    public Page<TaskDTO> getAllTasksByUSer(int page, int size){
         UUID authUserId = jwtService.getUserId();
-
+        Pageable pageable=PageRequest.of(page,size);
         User userAuth = userRepository.findById(authUserId).orElseThrow(
                 () -> new UserNotFoundException("User not found")
         );
 
 
-        return  taskRepository.findByUser(userAuth).stream().map(TaskDTO::new).toList();
+        return taskRepository.findByUser(userAuth,pageable).map(TaskDTO::new);
 
 
     }
