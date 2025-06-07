@@ -1,18 +1,14 @@
 package com.matheuslustosa.user_registration.controller;
-
 import com.matheuslustosa.user_registration.controller.response.ApiSuccessBuilder;
+import com.matheuslustosa.user_registration.dto.request.TaskUpdateDTO;
 import com.matheuslustosa.user_registration.dto.response.TaskDTO;
 import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
 import com.matheuslustosa.user_registration.dto.request.TaskCreateRequestDTO;
 import com.matheuslustosa.user_registration.dto.response.TaskCreateResponseDTO;
-
 import com.matheuslustosa.user_registration.dto.shared.PaginationReponseDTO;
 import com.matheuslustosa.user_registration.dto.shared.PaginationRequestDTO;
 import com.matheuslustosa.user_registration.service.TaskService;
-import com.matheuslustosa.user_registration.util.PaginationConstants;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +52,33 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<TaskDTO>>updateTaskById(@PathVariable Long id, @RequestBody TaskUpdateDTO dto){
+        TaskDTO data = taskService.updateTaskById(id, dto);
+        ApiResponseDTO<TaskDTO>response = ApiSuccessBuilder.success(
+                data,
+                HttpStatus.OK.value(),
+                "Task update successfully",
+                "/task/"+id
+        );
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<TaskDTO>>getTaskById(@PathVariable Long  id){
+        TaskDTO data=taskService.getTaskById(id);
+        ApiResponseDTO<TaskDTO>response = ApiSuccessBuilder.success(
+                data,
+                HttpStatus.OK.value(),
+                "Operation successfully",
+                "/task/"+id
+
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
     @GetMapping
     public ResponseEntity
             <ApiResponseDTO<PaginationReponseDTO<TaskDTO>>>getAllTaskByUser(@Valid @ModelAttribute PaginationRequestDTO pagination){
@@ -75,19 +98,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO<TaskDTO>>getTaskById(@PathVariable Long  id){
-        TaskDTO data=taskService.getTaskById(id);
-        ApiResponseDTO<TaskDTO>response = ApiSuccessBuilder.success(
-                data,
-                HttpStatus.OK.value(),
-                "Operation successfully",
-                "/task/"+id
 
-        );
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 
 
 

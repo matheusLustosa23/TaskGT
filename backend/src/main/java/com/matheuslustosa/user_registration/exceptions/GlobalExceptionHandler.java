@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
 
+
+
     @ExceptionHandler(TokenInvalidException.class)
     public ResponseEntity<ApiResponseDTO<?>>tokenInvalidException(TokenInvalidException ex,HttpServletRequest request){
         log.warn("Token is invalid: {}",ex.getMessage());
