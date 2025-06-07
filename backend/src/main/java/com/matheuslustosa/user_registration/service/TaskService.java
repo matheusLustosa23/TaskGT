@@ -90,9 +90,19 @@ public class TaskService {
     public TaskDTO getTaskById(Long id){
         UUID authUserId = jwtService.getUserId();
 
+        User userAuth = userRepository.findById(authUserId).orElseThrow(
+                () -> new UserNotFoundException("User not found")
+        );
+
         Task task = taskRepository.findById(id).orElseThrow(
                 () -> new TaskNotFoundException("Task not found")
         );
+
+        boolean isAdmin =  userAuth.getRoles().stream().anyMatch(role -> role.getName().equals(RoleType.ADMIN.name()));
+
+        if(!task.getUser().getId().equals(authUserId) || !isAdmin){
+            throw new InvalidCredentialsException(ErroCodesApi.ACCESS_DENIED.getMessage());
+        }
 
         return new TaskDTO(
                 task.getId(),

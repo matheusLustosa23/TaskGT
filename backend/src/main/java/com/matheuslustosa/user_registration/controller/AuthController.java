@@ -27,7 +27,12 @@ public class AuthController {
     public ResponseEntity<ApiResponseDTO<LoginResponseDTO>>login(@RequestBody LoginRequestDTO dto){
 
         var data = jwtService.login(dto);
-        ApiResponseDTO<LoginResponseDTO>response= ApiSuccessBuilder.success(data,HttpStatus.OK.value(), "Users fetched successfully","/login");
+        ApiResponseDTO<LoginResponseDTO>response= ApiSuccessBuilder.success(
+                data,
+                HttpStatus.OK.value(),
+                "Users fetched successfully",
+                "/login"
+        );
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
 
