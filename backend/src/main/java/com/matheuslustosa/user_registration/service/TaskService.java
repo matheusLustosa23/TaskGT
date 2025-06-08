@@ -75,7 +75,8 @@ public class TaskService {
                 () -> new UserNotFoundException("User not found")
         );
 
-        boolean isAdmin = userAuth.getRoles().stream().anyMatch( role -> role.getName().equals(RoleType.ADMIN.name()));
+        boolean isAdmin = userAuth.getRoles().stream().
+                anyMatch( role -> role.getName().equals(RoleType.ADMIN.name()));
 
 
         if (!authUserId.equals(task.getUser().getId()) && !isAdmin){
@@ -86,6 +87,18 @@ public class TaskService {
         taskRepository.delete(task);
 
     }
+
+    public Page<TaskDTO> getAllTasksByUSer(int page, int size){
+        UUID authUserId = jwtService.getUserId();
+        Pageable pageable=PageRequest.of(page,size);
+        User userAuth = userRepository.findById(authUserId).orElseThrow(
+                () -> new UserNotFoundException("User not found")
+        );
+
+        return taskRepository.findByUser(userAuth,pageable).map(TaskDTO::new);
+    }
+
+
 
     public TaskDTO getTaskById(Long id){
         UUID authUserId = jwtService.getUserId();
@@ -98,7 +111,9 @@ public class TaskService {
                 () -> new TaskNotFoundException("Task not found")
         );
 
-        boolean isAdmin =  userAuth.getRoles().stream().anyMatch(role -> role.getName().equals(RoleType.ADMIN.name()));
+        boolean isAdmin =  userAuth.getRoles().
+                stream().
+                anyMatch(role -> role.getName().equals(RoleType.ADMIN.name()));
 
         if(!task.getUser().getId().equals(authUserId) || !isAdmin){
             throw new InvalidCredentialsException(ErroCodesApi.ACCESS_DENIED.getMessage());
@@ -112,24 +127,8 @@ public class TaskService {
                 task.getPriority(),
                 task.getDeadLine()
         );
-
-
-
-
     }
 
-    public Page<TaskDTO> getAllTasksByUSer(int page, int size){
-        UUID authUserId = jwtService.getUserId();
-        Pageable pageable=PageRequest.of(page,size);
-        User userAuth = userRepository.findById(authUserId).orElseThrow(
-                () -> new UserNotFoundException("User not found")
-        );
-
-
-        return taskRepository.findByUser(userAuth,pageable).map(TaskDTO::new);
-
-
-    }
 
     public TaskDTO updateTaskById(Long id, TaskUpdateDTO dto){
         UUID authUserId = jwtService.getUserId();

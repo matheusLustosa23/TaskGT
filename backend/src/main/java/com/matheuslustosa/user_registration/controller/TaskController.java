@@ -2,6 +2,7 @@ package com.matheuslustosa.user_registration.controller;
 import com.matheuslustosa.user_registration.controller.response.ApiSuccessBuilder;
 import com.matheuslustosa.user_registration.dto.request.TaskUpdateDTO;
 import com.matheuslustosa.user_registration.dto.response.TaskDTO;
+import com.matheuslustosa.user_registration.dto.response.TaskDeleteDTO;
 import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
 import com.matheuslustosa.user_registration.dto.request.TaskCreateRequestDTO;
 import com.matheuslustosa.user_registration.dto.response.TaskCreateResponseDTO;
@@ -41,9 +42,10 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO<Void>>deleteTaskById(@PathVariable Long id){
+    public ResponseEntity<ApiResponseDTO<TaskDeleteDTO>>deleteTaskById(@PathVariable Long id){
         taskService.deleteTaskById(id);
-        ApiResponseDTO<Void>response = ApiSuccessBuilder.success(
+        ApiResponseDTO<TaskDeleteDTO>response = ApiSuccessBuilder.success(
+                new TaskDeleteDTO(true),
                 HttpStatus.OK.value(),
                  "Task deleted successfully",
                 "/task/"+id
