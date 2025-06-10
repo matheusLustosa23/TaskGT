@@ -8,6 +8,7 @@ public enum ErroCodesApi {
     TOKEN_INVALID("AUTH_003","Token is invalid"),
     USER_NOT_FOUND_ERROR("USER_001","user not found"),
     ROLE_NOT_FOUND_ERROR("ROLE_001","role not found"),
+    TASK_NOT_FOUND_ERROR("TASK_001","task not found"),
     INTERNAL_SERVER_ERROR("GEN_001","An unexpected error occurred. Contact support with error code GEN_001");
 
 

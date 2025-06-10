@@ -17,7 +17,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
 
-
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ApiResponseDTO<?>>taskNotFoundException(TaskNotFoundException taskNotFoundException,HttpServletRequest httpServletRequest) {
+        log.info("task not found exception: {}",taskNotFoundException.getMessage());
+        ApiResponseDTO<?>response=ApiErrorBuilder.error(
+                ErroCodesApi.TASK_NOT_FOUND_ERROR.getMessage(),
+                ErroCodesApi.TASK_NOT_FOUND_ERROR.getCode(),
+                HttpStatus.NOT_FOUND.value(),
+                httpServletRequest.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 
     @ExceptionHandler(TokenInvalidException.class)
     public ResponseEntity<ApiResponseDTO<?>>tokenInvalidException(TokenInvalidException ex,HttpServletRequest request){
