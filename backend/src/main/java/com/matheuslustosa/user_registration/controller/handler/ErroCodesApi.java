@@ -9,6 +9,7 @@ public enum ErroCodesApi {
     USER_NOT_FOUND_ERROR("USER_001","user not found"),
     ROLE_NOT_FOUND_ERROR("ROLE_001","role not found"),
     TASK_NOT_FOUND_ERROR("TASK_001","task not found"),
+    BODY_INVALID("BODY_001","Malformed JSON in request body."),
     INTERNAL_SERVER_ERROR("GEN_001","An unexpected error occurred. Contact support with error code GEN_001");
 
 
