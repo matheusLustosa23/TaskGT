@@ -1,4 +1,3 @@
-import Login from './pages/Login';
 
 function App() {
   return (
@@ -6,7 +5,7 @@ function App() {
       <nav className="h-28"></nav>
 
       <main className="flex-1 flex">
-        <Login />
+
       </main>
 
       <footer className="h-32"></footer>
