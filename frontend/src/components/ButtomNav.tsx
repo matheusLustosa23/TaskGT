@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export function ButtomNav({icon,link,children}:{icon?:React.ReactNode, link:string,children?:React.ReactNode})
 {
@@ -7,10 +8,13 @@ export function ButtomNav({icon,link,children}:{icon?:React.ReactNode, link:stri
     
 
         return(
-            <a href={link} className={baseClasses}>
-                {children}
-                {icon}
-            </a>
+            <Link to={link}>
+                <button className={baseClasses}>
+                    {children}
+                    {icon}
+                </button>
+            </Link>
+
         );
 
     

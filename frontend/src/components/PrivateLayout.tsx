@@ -5,14 +5,15 @@ import { ImExit } from "react-icons/im";
 import { Nav } from "./Nav";
 
 export function PrivateLayout({ children }: { children: React.ReactNode }) {
-  return (
+
+ return (
     <div className="flex flex-col min-h-screen">
          <nav className="h-28 border-b-1 border-gray-200 ">
            <Nav>
-              <ButtomNav icon={<MdAdd className="size-6" />} link="#">
+              <ButtomNav icon={<MdAdd className="size-6" />} link="/app/task">
                   New Task
                 </ButtomNav>
-                <ButtomNav icon={<ImExit className="size-6" />} link="#">
+                <ButtomNav icon={<ImExit className="size-6" />} link="/">
                     Logout
                 </ButtomNav> 
             </Nav>
