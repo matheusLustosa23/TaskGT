@@ -1,5 +1,7 @@
+
 import wallpaper from '../assets/images/TaskGt-walpapper.png';
 import { Wallpaper } from '../components/Wallpaper';
+import { AppLink } from './AppLink';
 
 function Login() {
   return (
@@ -17,7 +19,9 @@ function Login() {
                 <input type="password" name="password" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Password' />
                 <a href='#' className='underline text-red-600 self-end mr-4'>Forgot your password?</a>
                 <button className='bg-red-600 p-2 rounded-2xl w-4/12 text-white'>Login</button>
-                <p> New on TasgGT? <a href='#' className='underline text-red-600'>Create Account</a></p> 
+             
+                <p>Create Account<AppLink to='/signup'>Create Account</AppLink>
+                </p> 
             </form>
 
         </div>
