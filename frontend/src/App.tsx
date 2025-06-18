@@ -1,14 +1,14 @@
-import { PublicLayout } from "./components/PublicLayout";
-
+import {BrowserRouter} from "react-router-dom"
+import { AppRoutes } from "./routes/AppRoutes";
 
 function App() {
-  return (
-    <PublicLayout>
-      <div>
-       
-      </div>
-    </PublicLayout>
-  );
+
+  return(
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+
+  )
 }
 
 export default App;
