@@ -1,9 +1,9 @@
 
 
-import { ButtomNav } from "./ButtomNav";
-import { Footer } from "./Footer";
+import { ButtomNav } from "../components/ButtomNav";
+import { Footer } from "../components/Footer";
 
-import { Nav } from "./Nav";
+import { Nav } from "../components/Nav";
 import { FiLogIn, FiUserPlus } from 'react-icons/fi'; 
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {

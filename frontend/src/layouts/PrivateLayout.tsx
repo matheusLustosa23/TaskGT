@@ -1,8 +1,8 @@
 import { MdAdd } from "react-icons/md";
-import { ButtomNav } from "./ButtomNav";
-import { Footer } from "./Footer";
+import { ButtomNav } from "../components/ButtomNav";
+import { Footer } from "../components/Footer";
 import { ImExit } from "react-icons/im";
-import { Nav } from "./Nav";
+import { Nav } from "../components/Nav";
 
 export function PrivateLayout({ children }: { children: React.ReactNode }) {
 
