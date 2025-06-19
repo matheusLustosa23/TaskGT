@@ -1,5 +1,6 @@
 
 import wallpaper from '../assets/images/TaskGt-walpapper.png';
+import { Buttom } from '../components/Buttom';
 import { Wallpaper } from '../components/Wallpaper';
 import { AppLink } from './AppLink';
 
@@ -17,11 +18,13 @@ function Login() {
 
                 {/* <label className='text-xl' htmlFor="password">Password</label> */}
                 <input type="password" name="password" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Password' />
-                <a href='#' className='underline text-red-600 self-end mr-4'>Forgot your password?</a>
-                <button className='bg-red-600 p-2 rounded-2xl w-4/12 text-white'>Login</button>
+              
+                <AppLink to='#'>Forgot your password?</AppLink>
+                {/* <button className='bg-red-600 p-2 rounded-2xl w-4/12 text-white'>Login</button> */}
+                <Buttom onClick={() => ''}>Login</Buttom>
              
-                <p>Create Account<AppLink to='/signup'>Create Account</AppLink>
-                </p> 
+               <AppLink to='/signup'>Create Account</AppLink>
+              
             </form>
 
         </div>

@@ -1,4 +1,6 @@
 import wallpaper from '../assets/images/TaskGt-walpapper.png';
+import { Buttom } from '../components/Buttom';
+
 import { Wallpaper } from '../components/Wallpaper';
 import { AppLink } from './AppLink';
 export function SignUp() {
@@ -18,7 +20,9 @@ export function SignUp() {
      
                 <input type="password" name="password" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Password' />
 
-                <button className='bg-red-600 p-2 rounded-2xl w-4/12 text-white'>Create Account</button>
+    
+                <Buttom onClick={() => ''}>Create Account</Buttom>
+                
                 <p>Already registered? <AppLink to='/login'>Login</AppLink> </p> 
             </form>
 
