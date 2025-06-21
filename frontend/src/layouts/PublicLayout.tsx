@@ -11,10 +11,10 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         <div className="flex flex-col min-h-screen">
              <nav className="h-28 border-b-1 border-gray-200 ">
                <Nav>
-                    <ButtomNav icon={<FiLogIn className="size-6" />} link="/login">
+                    <ButtomNav icon={<FiLogIn className="size-6" />} to="/login">
                         Sign In
                     </ButtomNav>
-                    <ButtomNav icon={<FiUserPlus className="size-6" />} link="/signup">
+                    <ButtomNav icon={<FiUserPlus className="size-6" />} to="/signup">
                         Sign Up
                     </ButtomNav> 
                 </Nav>
