@@ -3,8 +3,9 @@ import { useState } from 'react';
 import wallpaper from '../assets/images/TaskGt-walpapper.png';
 import { Buttom } from '../components/Buttom';
 import { Wallpaper } from '../components/Wallpaper';
-import { AppLink } from './AppLink';
+
 import { UseAuthContext } from '../context/auth/UseAuthContext';
+import { AppLink } from '../components/AppLink';
 
 function Login() {
 

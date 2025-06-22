@@ -1,8 +1,9 @@
 import wallpaper from '../assets/images/TaskGt-walpapper.png';
+import { AppLink } from '../components/AppLink';
 import { Buttom } from '../components/Buttom';
 
 import { Wallpaper } from '../components/Wallpaper';
-import { AppLink } from './AppLink';
+
 export function SignUp() {
     return(
             <div className="flex-1  flex shadow-2xl bg-gradient-to-r from-white via-white to-red-600">
