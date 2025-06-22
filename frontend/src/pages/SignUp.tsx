@@ -13,12 +13,12 @@ export function SignUp() {
             <form action="" method="post" className='flex w-md h-8/12 flex-col gap-4 items-center justify-center shadow-2xl rounded-2xl bg-white'>
                
                 <legend className='text-2xl'>Sign Up</legend>
-                <input type="text" name="username" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Username' />
-                <input type="text" name="email" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Email' />
+                <input type="text" name="username" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Username' autoComplete='username' />
+                <input type="text" name="email" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Email' autoComplete='email' />
 
 
      
-                <input type="password" name="password" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Password' />
+                <input type="password" name="password" className='p-1 focus:outline-none border rounded-2xl w-8/12' placeholder='Password' autoComplete='current-password' />
 
     
                 <Buttom onClick={() => ''}>Create Account</Buttom>
