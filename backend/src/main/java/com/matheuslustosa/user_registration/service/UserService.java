@@ -1,7 +1,9 @@
 package com.matheuslustosa.user_registration.service;
 
 import com.matheuslustosa.user_registration.dto.request.UserCreateRequestDTO;
+import com.matheuslustosa.user_registration.dto.response.ProfileDTO;
 import com.matheuslustosa.user_registration.dto.response.UserCreateResponseDTO;
+import com.matheuslustosa.user_registration.entity.Role;
 import com.matheuslustosa.user_registration.entity.User;
 import com.matheuslustosa.user_registration.enums.RoleType;
 import com.matheuslustosa.user_registration.exceptions.ResourceAlreadyExistsException;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,11 +22,29 @@ public class UserService {
     private  final UserRepository userRepository;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+    }
+
+    public ProfileDTO getProfile(){
+        UUID authId = jwtService.getUserId();
+        User user = userRepository.findById(authId).orElseThrow(
+                () -> new UserNotFoundException("User not found")
+        );
+
+        Set<String>roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
+
+         return  new ProfileDTO(
+                 user.getId(),
+                 user.getUsername(),
+                 user.getEmail(),
+                 roles
+         );
     }
 
     public UserCreateResponseDTO registerUser(UserCreateRequestDTO dto){

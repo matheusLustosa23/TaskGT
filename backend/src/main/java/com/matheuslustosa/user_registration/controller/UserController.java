@@ -1,6 +1,7 @@
 package com.matheuslustosa.user_registration.controller;
 
 import com.matheuslustosa.user_registration.controller.response.ApiSuccessBuilder;
+import com.matheuslustosa.user_registration.dto.response.ProfileDTO;
 import com.matheuslustosa.user_registration.dto.shared.ApiResponseDTO;
 import com.matheuslustosa.user_registration.dto.request.UserCreateRequestDTO;
 import com.matheuslustosa.user_registration.dto.response.UserCreateResponseDTO;
@@ -20,6 +21,8 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+
 
     @PostMapping
     public ResponseEntity<ApiResponseDTO<UserCreateResponseDTO>>createUser(@RequestBody UserCreateRequestDTO dto){
@@ -52,6 +55,20 @@ public class UserController {
 
         return ResponseEntity.ok(response);
 
+
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponseDTO<ProfileDTO>>getProfile(){
+        ProfileDTO data = userService.getProfile();
+        ApiResponseDTO<ProfileDTO> response = ApiSuccessBuilder.success(
+           data
+          ,HttpStatus.OK.value(),
+          "operation successfully",
+          "/user/me"
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 }
