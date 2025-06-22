@@ -3,8 +3,11 @@ import { ButtomNav } from "../components/ButtomNav";
 import { Footer } from "../components/Footer";
 import { ImExit } from "react-icons/im";
 import { Nav } from "../components/Nav";
+import { UseAuthContext } from "../context/UseAuthContext";
 
 export function PrivateLayout({ children }: { children: React.ReactNode }) {
+
+   const logout=UseAuthContext().logout
 
  return (
     <div className="flex flex-col min-h-screen">
@@ -13,9 +16,9 @@ export function PrivateLayout({ children }: { children: React.ReactNode }) {
               <ButtomNav icon={<MdAdd className="size-6" />} to="/app/task">
                   New Task
                 </ButtomNav>
-                <ButtomNav  icon={<ImExit className="size-6" />}>
+                <ButtomNav  icon={<ImExit className="size-6" />} onClick={logout}>
                     Logout
-                </ButtomNav> 
+                </ButtomNav>
             </Nav>
          </nav>
    

@@ -5,15 +5,16 @@ import Login from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { Navigate } from "react-router-dom";
 import { NotFound } from "../pages/NotFound";
+import { UseAuthContext } from "../context/UseAuthContext";
 
 export function PublicRoutes(){
 
-    const auth=false;
-    if(auth){
+    const context=UseAuthContext()
+    if(context.authenticated){
         return <Navigate to={'/app'} />
     }
 
-    console.log('rote public')
+
 
     return(
         <PublicLayout>
