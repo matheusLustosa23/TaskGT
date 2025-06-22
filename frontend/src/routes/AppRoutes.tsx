@@ -9,7 +9,7 @@ export function AppRoutes() {
    return(
         <Routes>
             <Route path="/*" element={<PublicRoutes />} />
-            <Route path="/app*" element={<PrivateRoutes />} />
+            <Route path="/app/*" element={<PrivateRoutes />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     )
