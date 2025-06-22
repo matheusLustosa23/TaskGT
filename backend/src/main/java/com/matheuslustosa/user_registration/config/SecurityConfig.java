@@ -19,9 +19,13 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user").permitAll()
                         .anyRequest().authenticated())
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(auth -> auth.jwt(Customizer.withDefaults()))
                 .headers(headers -> headers.frameOptions(frameOption->frameOption.sameOrigin()))
@@ -50,6 +55,19 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:5173")); // Frontend dev
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true); // 🔒 Se usa cookies ou JWT via header Authorization
+        config.setMaxAge(3600L); // Tempo em segundos que o navegador pode cachear o CORS
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config); // 🔥 Aplica para toda a API
+        return source;
+    }
     @Bean
     JwtEncoder jwtEncoder(){
         RSAKey jwk=new RSAKey.Builder(publicKey).privateKey(privateKey).build();
