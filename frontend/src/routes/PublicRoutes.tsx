@@ -5,7 +5,7 @@ import Login from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { Navigate } from "react-router-dom";
 import { NotFound } from "../pages/NotFound";
-import { UseAuthContext } from "../context/UseAuthContext";
+import { UseAuthContext } from "../context/auth/UseAuthContext";
 
 export function PublicRoutes(){
 

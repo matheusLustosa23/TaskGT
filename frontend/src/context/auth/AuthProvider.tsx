@@ -1,9 +1,9 @@
-import type { AuhtContextType } from "../types/AuthContextType"
+import type { AuhtContextType } from "../../types/AuthContextType"
 import { AuthContext } from "./AuthContext"
-import { AuthService } from "../services/AuthService"
-import type { loguinRequestType } from "../types/LoginRequestType";
+import { AuthService } from "../../services/AuthService"
+import type { loguinRequestType } from "../../types/LoginRequestType";
 import { useEffect, useState } from "react";
-import { handleApiError } from "../errors/HandleApiError";
+import { handleApiError } from "../../errors/handleApiError";
 
 
 export function AuthProvider({children}:{children:React.ReactNode}){

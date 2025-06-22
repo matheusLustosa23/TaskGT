@@ -4,7 +4,7 @@ import { Home } from "../pages/Home";
 import { CreateTarsk } from "../pages/CreateTask";
 import { Navigate } from "react-router-dom";
 import { NotFound } from "../pages/NotFound";
-import { UseAuthContext } from "../context/UseAuthContext";
+import { UseAuthContext } from "../context/auth/UseAuthContext";
 
 export function PrivateRoutes(){
 const context=UseAuthContext()

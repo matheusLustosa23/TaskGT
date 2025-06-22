@@ -3,7 +3,7 @@ import { ButtomNav } from "../components/ButtomNav";
 import { Footer } from "../components/Footer";
 import { ImExit } from "react-icons/im";
 import { Nav } from "../components/Nav";
-import { UseAuthContext } from "../context/UseAuthContext";
+import { UseAuthContext } from "../context/auth/UseAuthContext";
 
 export function PrivateLayout({ children }: { children: React.ReactNode }) {
 
