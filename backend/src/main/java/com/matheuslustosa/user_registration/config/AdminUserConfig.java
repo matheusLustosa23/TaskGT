@@ -20,6 +20,8 @@ import java.util.Set;
 @Profile({"dev","test"})
 @Order(1)
 public class AdminUserConfig implements CommandLineRunner {
+    @Value("${default.admin.email}")
+    private String emailDefaultAdmin;
 
     @Value("${default.admin.password}")
     private String adminDefaultPassword;
@@ -83,10 +85,11 @@ public class AdminUserConfig implements CommandLineRunner {
                     System.out.println("Criando User admin");
                     User user= new User();
                     user.setUsername("admin");
+                    user.setEmail(emailDefaultAdmin);
                     user.setPassword(
                             passwordEncoder.encode(adminDefaultPassword)
                     );
-                    user.setRoles(Set.of(roleService.getOrThrow(RoleType.ADMIN.name())));
+                    user.setRoles(Set.of(roleService.getOrThrow(RoleType.ADMIN.name()), roleService.getOrThrow(RoleType.USER.name())));
                     userRepository.save(user);
                     System.out.println("User admin criado com sucesso!");
                 }

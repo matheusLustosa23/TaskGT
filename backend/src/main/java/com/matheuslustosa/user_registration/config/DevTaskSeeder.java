@@ -25,8 +25,8 @@ import java.util.UUID;
 public class DevTaskSeeder implements CommandLineRunner {
 
 
-
-
+    @Value("${default.user.email}")
+    private String emailDefaultUser;
     @Value("${default.user.password}")
     private String userDefaultPassword;
 
@@ -61,6 +61,7 @@ public class DevTaskSeeder implements CommandLineRunner {
                     System.out.println("Criando User user");
                     User user = new User();
                     user.setUsername("user");
+                    user.setEmail(emailDefaultUser);
                     user.setPassword(
                             passwordEncoder.encode(userDefaultPassword)
                     );
