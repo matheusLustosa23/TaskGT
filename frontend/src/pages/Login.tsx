@@ -6,6 +6,8 @@ import { Wallpaper } from '../components/Wallpaper';
 
 import { UseAuthContext } from '../context/auth/UseAuthContext';
 import { AppLink } from '../components/AppLink';
+import Modal from '../components/Modal';
+
 
 function Login() {
 
@@ -13,23 +15,42 @@ function Login() {
 
   const[username,setUsername]=useState('')
   const[password,setPassword]=useState('')
-  function HandleLogin(event:React.FormEvent){
+  const[error,setError]=useState<string | null>(null)
+
+  const closeModal = ()=> {
+    setError(null)
+  }
+  
+  
+  
+
+  async function HandleLogin(event:React.FormEvent){
     event.preventDefault()
     if(!username.trim() || !password.trim()){
-      alert('Please ,Complete all camps')
+      setError("Please complete all camps")
       return;
     }
 
-    login({username,password})
+    try{
+      await login({username,password})
+    }catch(error:unknown){
+      console.log(`Error:${error}`)
+      setError(String(error))
+ 
+    }
 
     
 
   }
 
   return (
+    
     <div className="flex-1  flex shadow-2xl bg-gradient-to-r from-white via-white to-red-600">
+        {error && <Modal title="Error" description={error} onClick={closeModal}/>}
         <Wallpaper image={wallpaper} />
+        
         <div className='flex flex-col flex-1 justify-center items-center gap-6 bg-grat '>
+            
 
             <form onSubmit={HandleLogin} className='flex w-md h-8/12 flex-col gap-6 items-center justify-center shadow-2xl rounded-2xl bg-white'>
     

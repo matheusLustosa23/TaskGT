@@ -23,7 +23,7 @@ export function Buttom(
     if(onClick){
          return (
         <button className={classBase} 
-        onClick={() => onClick} {...rest}>
+        onClick={onClick} {...rest}>
             {children}
         
         </button>

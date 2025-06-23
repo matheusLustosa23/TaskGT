@@ -52,7 +52,7 @@ export function AuthProvider({children}:{children:React.ReactNode}){
             console.log(`dados recebidos ${response}`)
         }catch(error:unknown){
             const err=handleApiError(error,'error login')
-            alert(err)
+            throw err;
         }
      
         
