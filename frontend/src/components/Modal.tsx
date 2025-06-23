@@ -1,6 +1,6 @@
 import { Buttom } from "./Buttom";
 
-export default function Modal({title,description,onClick}:{title?:string,description:string,onClick:()=>void}){
+export default function Modal({title,description,onClick}:{title:string,description:string,onClick:()=>void}){
 
     return(
 

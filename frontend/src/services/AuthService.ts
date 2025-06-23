@@ -5,11 +5,13 @@ import { api } from "./api";
 
 export const AuthService = {
 
-    login:async function login(data:loguinRequestType):Promise<ApiResponseType<LoginResponseType>> {
+    login:async(data:loguinRequestType):Promise<ApiResponseType<LoginResponseType>> => {
        
         const response = await api.post<ApiResponseType<LoginResponseType>>('/login',data)
         return response.data
-    }
+    },
+
+
 
 };
 
