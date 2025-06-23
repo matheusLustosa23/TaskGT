@@ -1,5 +1,6 @@
 package com.matheuslustosa.user_registration.service;
 
+import com.matheuslustosa.user_registration.controller.handler.ErroCodesApi;
 import com.matheuslustosa.user_registration.dto.request.UserCreateRequestDTO;
 import com.matheuslustosa.user_registration.dto.response.ProfileDTO;
 import com.matheuslustosa.user_registration.dto.response.UserCreateResponseDTO;
@@ -51,7 +52,7 @@ public class UserService {
 
 
         if(userRepository.findByEmail(dto.email()).isPresent()){
-            throw new ResourceAlreadyExistsException("Email already in use");
+            throw new ResourceAlreadyExistsException("The email "+dto.email()+" already exists");
         }
 
 

@@ -18,6 +18,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ApiResponseDTO<?>>resourceAlreadyExistsException(ResourceAlreadyExistsException e,HttpServletRequest request) {
+        log.warn("Resource Already Exists {}" ,e.getMessage());
+        ApiResponseDTO<?>response =  ApiErrorBuilder.error(
+                e.getMessage(),
+                ErroCodesApi.RESOURCE_ALREADY_EXISTS.getCode(),
+                HttpStatus.CONFLICT.value(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
     @ExceptionHandler(TaskNotFoundException.class)
     public ResponseEntity<ApiResponseDTO<?>>taskNotFoundException(TaskNotFoundException taskNotFoundException,HttpServletRequest httpServletRequest) {
         log.info("task not found exception: {}",taskNotFoundException.getMessage());
