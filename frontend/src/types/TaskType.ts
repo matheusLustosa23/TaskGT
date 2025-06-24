@@ -4,5 +4,5 @@ export type TaskType = {
     description:string,
     priority:string,
     status:string,
-    deadeLine:string
+    deadLine:string
 }
