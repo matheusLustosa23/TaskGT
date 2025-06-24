@@ -11,7 +11,13 @@ import type { PaginationResponseType } from '../types/PaginationResponseType';
 import type { TaskType } from '../types/TaskType';
 import { FaArrowRight,FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { FiFilePlus } from "react-icons/fi";
+
+import type { RegisterTaskRequestType } from '../types/RegisterTaskRequestType';
+
+
+import Modal from '../components/Modal';
+import { handleApiError } from '../errors/handleApiError';
+import { FaSave } from "react-icons/fa";
 
 export function Home(){
 
@@ -19,6 +25,36 @@ export function Home(){
     const[tasks,setTasks] = useState<TaskType[] | null>(null)
     const[pagination,setPagination] = useState<PaginationType | null>(null)
     const[page,setPage] = useState<number>(0)
+    const[modal,setModal]=useState<{title:string,description:string,isSucess:boolean} | null>(null)
+    const[newTask,setNewTask]=useState<RegisterTaskRequestType>({
+        title:'',
+        description:'',
+        priority:'LOW',
+        deadLine:''
+    })
+
+    const closeModal = () =>{
+        setModal(null)
+    }
+
+    
+
+    const registerTask = async() => {
+        try{
+            await TaskService.registerTask(newTask)
+            getTasks()
+
+        }catch(error:unknown){
+            const message = handleApiError(error,'Error to register Task')
+                setModal({
+                title:"Error",
+                description:message,
+                isSucess:false
+            
+            })
+        }
+      
+    }
 
     const getTasks = async() => {
         try {
@@ -28,6 +64,12 @@ export function Home(){
             console.log('tasks:',items)
             setTasks(items)
             setPagination(paginationResponse)
+            setNewTask({
+                title:'',
+                description:'',
+                priority:'LOW',
+                deadLine:''
+            })
         } catch (error:unknown) {
             console.log(error)
         }
@@ -43,11 +85,12 @@ export function Home(){
 
     
 
-
+   
     if(tasks && pagination && tasks.length > 0){
         const classBaseRow= 'px-4 py-2 whitespace-nowrap overflow-hidden text-ellipsis'
         return (
         <div className='bg-gradient-to-r from-white via-red-400 to-red-600 flex flex-1 flex-col justify-between items-center '>
+             {modal && <Modal title={modal.title} description={modal.description} onClick={closeModal} />}
             <table className='h-auto bg-white w-7/10 rounded-2xl table-fixed'>
             <thead className='bg-black text-white'>
                 <tr >
@@ -83,7 +126,7 @@ export function Home(){
             <tfoot>
                 <tr className="bg-blue-100"> 
                     <td className={`${classBaseRow}`}> 
-                        <input type="checkbox" className="mx-auto block" /> 
+                        <input type="checkbox" className="mx-auto block"  /> 
                     </td>
                     <td className={`${classBaseRow}`}>
                         <input
@@ -91,6 +134,8 @@ export function Home(){
                             name="title"
                             placeholder="Título"
                             className="w-full p-1 border rounded"
+                            value={newTask.title}
+                            onChange={(e)=>{setNewTask(x=>({...x,title:e.target.value}))}}
                         />
                     </td>
                     <td className={`${classBaseRow}`}>
@@ -99,22 +144,28 @@ export function Home(){
                             name="description"
                             placeholder="Descrição"
                             className="w-full p-1 border rounded"
+                            value={newTask.description}
+                            onChange={(e)=>{setNewTask(x=>({...x,description:e.target.value}))}}
                         />
                     </td>
                     <td className={`${classBaseRow}`}>
-                        <input
-                            type="text"
-                            name="priority"
-                            placeholder="Prioridade"
-                            className="w-full p-1 border rounded"
-                        />
+
+                    <select name="prioridade" id="prioridade" className="border rounded-2xl p-1" onChange={(e)=>{setNewTask(x=>({...x,priority:e.target.value}))}} value={newTask.priority}>
+                        <option value="LOW">Low</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="HIGH">High</option>
+                        <option value="CRITICAL">Critical</option>
+                    
+                    </select>
                     </td>
                     <td className={`${classBaseRow}`}>
                         <input
-                            type="text"
+                            type="ext"
                             name="status"
                             placeholder="Status"
                             className="w-full p-1 border rounded"
+                            value={"TO_DO"}
+                            disabled
                         />
                     </td>
                     <td className={`${classBaseRow}`}>
@@ -123,11 +174,13 @@ export function Home(){
                             name="deadLine"
                             placeholder="Dead Line"
                             className="w-full p-1 border rounded"
+                            onChange={(e)=>{setNewTask(x=>({...x,deadLine:e.target.value}))}}
+                            value={newTask.deadLine}
                         />
                     </td>
                     <td className={`${classBaseRow} text-center`}>
-                        <button className="text-green-600 hover:text-green-800">
-                            <FiFilePlus size={20} className="mx-auto" /> 
+                        <button className="text-green-600 hover:text-green-800" onClick={registerTask}>
+                            <FaSave  size={30} className="mx-auto" /> 
                         </button>
                     </td>
                 </tr>
