@@ -1,6 +1,8 @@
 import type { ApiResponseType } from "../types/ApiReponseType"
 import type { PaginationResponseType } from "../types/PaginationResponseType"
 import type { PaginationRequestType } from "../types/PaginationResquestType"
+import type { RegisterTaskRequestType} from "../types/RegisterTaskRequestType"
+import type { RegisterTaskResponseType } from "../types/RegisterTaskResponseType"
 import type { TaskType } from "../types/TaskType"
 import { api } from "./api"
 
@@ -38,6 +40,21 @@ export const TaskService = {
            
             
        })
+        return response.data
+    },
+
+    registerTask: async(data:RegisterTaskRequestType):Promise<ApiResponseType<RegisterTaskResponseType>> => {
+        const token = localStorage.getItem('token')
+        if(!token){
+            throw new Error('token not found')
+        }
+        const response = await api.post<ApiResponseType<RegisterTaskResponseType>>('/task',data,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+
+        })
+
         return response.data
     }
     // updateTask:string,
