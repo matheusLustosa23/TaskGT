@@ -1,4 +1,5 @@
 import type { ApiResponseType } from "../types/ApiReponseType"
+import type { DeleteTask } from "../types/DeleteTaskType"
 import type { PaginationResponseType } from "../types/PaginationResponseType"
 import type { PaginationRequestType } from "../types/PaginationResquestType"
 import type { RegisterTaskRequestType} from "../types/RegisterTaskRequestType"
@@ -6,9 +7,8 @@ import type { RegisterTaskResponseType } from "../types/RegisterTaskResponseType
 import type { TaskType } from "../types/TaskType"
 import { api } from "./api"
 
-
 export const TaskService = {
-    
+
     getById:async(id:number):Promise<ApiResponseType<TaskType>> => {
         const token = localStorage.getItem('token')
         if(!token){
@@ -23,7 +23,6 @@ export const TaskService = {
 
     },
 
-
     getAll: async(pagination:PaginationRequestType):Promise<ApiResponseType<PaginationResponseType<TaskType[]>>> => {
         const token = localStorage.getItem('token')
         if(!token){
@@ -37,9 +36,8 @@ export const TaskService = {
                 page:pagination.page,
                 pageSize:pagination.pageSize
             }
-           
-            
-       })
+        })
+       
         return response.data
     },
 
@@ -52,11 +50,23 @@ export const TaskService = {
             headers:{
                 Authorization:`Bearer ${token}`
             }
-
         })
 
         return response.data
+    },
+
+    deleteById:async(id:number):Promise<ApiResponseType<DeleteTask>> => {
+        const token = localStorage.getItem('token')
+
+        if(!token){
+            throw('token not found')
+        }
+        
+        const reponse = await api.delete<ApiResponseType<DeleteTask>>(`/task/${id}`,{
+            headers:{Authorization:`Bearer ${token}`}
+        })
+
+        return reponse.data
     }
-    // updateTask:string,
-    // deleteById:string
+
 }
