@@ -18,6 +18,7 @@ import type { RegisterTaskRequestType } from '../types/RegisterTaskRequestType';
 import Modal from '../components/Modal';
 import { handleApiError } from '../errors/handleApiError';
 import { FaSave } from "react-icons/fa";
+import type { DeleteTask } from '../types/DeleteTaskType';
 
 export function Home(){
 
@@ -37,13 +38,16 @@ export function Home(){
         setModal(null)
     }
 
-    
-
     const registerTask = async() => {
         try{
+         
             await TaskService.registerTask(newTask)
-            getTasks()
-
+            if(tasks?.length===10){
+                setPage(page+1)
+            }else{
+                await getTasks()
+            }
+            
         }catch(error:unknown){
             const message = handleApiError(error,'Error to register Task')
                 setModal({
@@ -61,7 +65,6 @@ export function Home(){
             const response:ApiResponseType<PaginationResponseType<TaskType[]>> = await TaskService.getAll({page:page,pageSize:10})
             const items:TaskType[] | null = response.data?.items || null
             const paginationResponse:PaginationType | null = response.data?.pagination || null
-            console.log('tasks:',items)
             setTasks(items)
             setPagination(paginationResponse)
             setNewTask({
@@ -75,17 +78,54 @@ export function Home(){
         }
     }
 
+    const deleteTask = async(id:number) => {
+        try{
+            const isConfirm = confirm("Are you sure you want to delete this task?")
+            if(isConfirm){
+                const response:ApiResponseType<DeleteTask> = await TaskService.deleteById(id)
+                const isDeleted = response.data?.deleted
+                const message = response.summary.message
+                if(!isDeleted){
+                    setModal({
+                        title:"Error",
+                        description:message,
+                        isSucess:false
+                    
+                    })
+
+                    return
+                }
+                console.log('chegou onde n devia')
+                if(tasks?.length === 1 && pagination?.hasPrevious){
+                    setPage(page-1)
+                }else{
+                    await getTasks()
+                }
+            }
+            
+           
+        }catch(error:unknown){
+            const message = handleApiError(error,'error to delete task')
+                      
+            setModal({
+                title:"Error",
+                description:message,
+                isSucess:false
+            
+            })
+            
+        }
+    }
+
 
     useEffect(()=>{
         getTasks()
+        
     },[page])
 
 
 
-
-    
-
-   
+    //render Tasks
     if(tasks && pagination && tasks.length > 0){
         const classBaseRow= 'px-4 py-2 whitespace-nowrap overflow-hidden text-ellipsis'
         return (
@@ -114,7 +154,7 @@ export function Home(){
                         <td className={`${classBaseRow}`}>{task.priority}</td>
                         <td className={`${classBaseRow}`}>{task.status}</td>
                         <td className={`${classBaseRow}`}>{task.deadLine}</td>
-                        <td className={`${classBaseRow} flex flex-row gap-5`}><GrEdit /> <MdDelete /></td>
+                        <td className={`${classBaseRow} flex flex-row gap-5`}><GrEdit /> <MdDelete onClick={()=>deleteTask(task.id)} /></td>
                       
                        
                     </tr>
