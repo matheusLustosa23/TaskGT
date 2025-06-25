@@ -43,8 +43,12 @@ export function Home(){
         try{
          
             await TaskService.registerTask(newTask)
-            setPage((prev)=>tasks?.length===10?prev+1:prev)
-      
+            
+            if(tasks?.length===10){
+                setPage(page+1)
+            }else{
+                await getTasks()
+            }
             
         }catch(error:unknown){
             const message = handleApiError(error,'Error to register Task')
@@ -93,9 +97,14 @@ export function Home(){
 
                     return
                 }
-                console.log('chegou onde n devia')
+                console.log('Task deletada')
                 setPage((prev)=>tasks?.length===1?prev-1:prev)
-
+                if(tasks?.length === 1 && pagination?.hasPrevious){
+                    setPage(page-1)
+                }else{
+                    await getTasks()
+                    
+                }
             }
             
            
@@ -114,6 +123,7 @@ export function Home(){
 
 
     useEffect(()=>{
+        console.log('chamando useEffect')
         getTasks()
         
     },[page])
